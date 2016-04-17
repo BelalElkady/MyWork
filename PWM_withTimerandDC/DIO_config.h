@@ -11,7 +11,7 @@
 
 /*Comment!: PIN initial direction*/
 /*Range!: DIO_u8INPUT~DIO_u8OUTPUT*/
-#define    DIO_u8PIN_INITDIR0			DIO_u8OUTPUT
+#define    DIO_u8PIN_INITDIR0			DIO_u8INPUT
 #define    DIO_u8PIN_INITDIR1			DIO_u8INPUT
 #define    DIO_u8PIN_INITDIR2			DIO_u8INPUT
 #define    DIO_u8PIN_INITDIR3			DIO_u8INPUT

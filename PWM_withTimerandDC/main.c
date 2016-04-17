@@ -7,23 +7,26 @@
 #include "types.h"
 #include "DIO_interface.h"
 #include "TIMER_interface.h"
+#include "ADC_interface.h"
 #include "interrupt.h"
 
 volatile u8 Value=1;
 
 
-
+u16 ADC_read;
+volatile u8 ADC_Counter=0;
 void Timer_ISR(void){
+	ADC_Counter++;
+	if (ADC_Counter > ((ADC_read>>8))){
+			//Value=!Value;
+			DIO_u8WritePinVal(8,1);
 
-	Value=!Value;
-	DIO_u8WritePinVal(16,Value);
-//	if (Value==1){
-	TIMER_voidSetCounter(255);
-//	}
-//	else{
-//	TIMER_voidSetCounter(247);
-//	}
+	}
+	else {
+		    DIO_u8WritePinVal(8,0);
+	}
 
+	if (ADC_Counter>255) ADC_Counter=0;
 
 
 }
@@ -31,21 +34,15 @@ void Timer_ISR(void){
 int main(void) {
 
 	DIO_voidInit();
-	//TIMER_voidInit();
-	//TIMER_voidSetOVISR(Timer_ISR);
-	//Global_voidInterruptEnable();
-	//TIMER_voidSetCounter(255);
+	TIMER_voidInit();
+	ADC_voidConfig();
+	ADC_voidEnable();
+	TIMER_voidSetOVISR(Timer_ISR);
+	Global_voidInterruptEnable();
+
 	while (1) {
 
-
-
-#include "DIO_private.h"
-
-		*PORTB= 0;
-		*PORTB = 1;
-
-		//DIO_u8WritePinVal(16,1);
-		//DIO_u8WritePinVal(16,0);
+		ADC_voidReadSingleShot(&ADC_read);
 
 
 
