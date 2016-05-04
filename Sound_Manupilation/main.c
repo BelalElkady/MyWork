@@ -13,36 +13,7 @@
 #include <avr/pgmspace.h>
 #include "DIO_private.h"
 
-//127.5000  140.2288  152.8303  165.1788  177.1508  188.6268  199.4919  209.6378
-//
-//  Columns 9 through 16
-//
-//  218.9629  227.3742  234.7876  241.1289  246.3350  250.3537  253.1448  254.6806
-//
-//  Columns 17 through 24
-//
-//  254.9456  253.9373  251.6656  248.1533  243.4354  237.5592  230.5833  222.5774
-//
-//  Columns 25 through 32
-//
-//  213.6216  203.8052  193.2264  181.9909  170.2110  158.0043  145.4928  132.8015
-//
-//  Columns 33 through 40
-//
-//  120.0573  107.3874   94.9185   82.7751   71.0786   59.9459   49.4881   39.8098
-//
-//  Columns 41 through 48
-//
-//   31.0077   23.1697   16.3741   10.6888    6.1707    2.8649    0.8044    0.0098
-//
-//  Columns 49 through 56
-//
-//    0.4890    2.2373    5.2372    9.4586   14.8595   21.3859   28.9725   37.5436
-//
-//  Columns 57 through 64
-//
-//   47.0135   57.2876   68.2632   79.8307   91.8745  104.2743  116.9061  129.6438
-//
+
 u8 const table[63] PROGMEM = { 127, 140, 152, 165, 177, 188,
 		199, 209, 219, 227, 234, 241, 246, 250, 253, 254, 255, 254, 251, 248,
 		243, 237, 230, 222, 213, 203, 193, 181, 170, 158, 145, 132, 120, 107,
@@ -1149,7 +1120,14 @@ u16 ADC_u8read;
 void Fun(void) {
 
 	Local_u8OVCount++;
-	//TIMER_voidSetCounter(150);
+
+	if (Local_u8OVCount > 1){
+				Local_u8Count++;
+				 PORTC=pgm_read_byte(&song[Local_u8Count]);
+				Local_u8Count%=15999;
+				Local_u8OVCount = 0;
+			}
+
 
 }
 int main(void) {
@@ -1160,18 +1138,12 @@ int main(void) {
 	TIMER_voidInit();
 	TIMER_voidSetOVISR(Fun);
 	Global_voidInterruptEnable();
-	//TIMER_voidSetCounter(100);
+
 
 	while (1) {
-	//	ADC_voidReadSingleShot(&ADC_u8read);
+		//ADC_voidReadSingleShot(&ADC_u8read);
 
-		if (Local_u8OVCount > 0 ){
-			Local_u8Count++;
-			//DIO_u8WritePortVal(2,pgm_read_byte(&song[Local_u8Count]));
-			 PORTC=pgm_read_byte(&song[Local_u8Count]);
-			Local_u8Count%=15999;
-			Local_u8OVCount = 0;
-		}
+
 
 
 	}

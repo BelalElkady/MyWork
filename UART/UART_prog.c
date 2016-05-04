@@ -8,7 +8,10 @@
 #include "UART_private.h"
 #include "UART_config.h"
 #include "UART_interface.h"
-#include "avr/interrupt.h"
+#include "interrupt.h"
+
+static void (*PtrToSendingISR)(void);
+static void (*PtrToReciveingISR)(void);
 
 
 extern void UART_voidInit(void) {
@@ -33,7 +36,7 @@ extern void UART_voidTxEnable(void) {
 
 #if (UART_Transmitter_Interrupt == ENABLE)
 	UCSRB |= (1 << 5);
-	sei();	//enable global interrupt
+	__asm__("sei");	//enable global interrupt
 #elif (UART_Transmitter_Interrupt == DISBALE)
 	UCSRB &=~ (1 << 5);
 #endif
@@ -47,7 +50,7 @@ extern void UART_voidRxEnable(void) {
 
 #if (UART_Receiver_Interrupt == ENABLE)
 	UCSRB |= (1 << 7);
-	sei();    //enable global interrupt
+	__asm__("sei");    //enable global interrupt
 #elif (UART_Receiver_Interrupt == DISBALE)
 	UCSRB &=~ (1 << 7);
 #endif
@@ -101,4 +104,28 @@ extern void UART_voidSendString(u8 *Copy_u8PtrToStr) {
 	return;
 }
 
+extern void UART_voidSendISR(void (*Copy_PtrToISR)(void)){
+
+
+	PtrToSendingISR=Copy_PtrToISR;
+
+    return  ;
+}
+extern void UART_voidReceiveISR(void (*Copy_PtrToISR)(void)){
+
+
+	PtrToReciveingISR=Copy_PtrToISR;
+
+    return  ;
+}
+
+ISR (__vector_13){
+	PtrToReciveingISR();
+}
+
+ISR (__vector_14){
+
+	PtrToSendingISR();
+
+}
 

@@ -23,6 +23,8 @@ extern void UART_voidInteruptSend(u8 Copy_u8Char);
 extern u8 UART_u8InterruptReceive(void);
 /*Comment!:Send a String  */
 extern void UART_voidSendString(u8 *Copy_u8PtrToStr);
+/*Comment!:Call back function for the interrupt handler */
+extern void UART_voidISR(void (*Copy_PtrToISR)(void));
 
 
 

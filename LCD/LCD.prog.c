@@ -62,7 +62,7 @@ extern void LCD_voidWriteData(u8 Copy_u8Data) {
 	DIO_u8WritePinVal(LCD_RS, 1);
 	DIO_u8WritePinVal(LCD_RW, 0);
 	DIO_u8WritePinVal(LCD_Enable, 1);
-	delay_ms(1);
+	//delay_ms(1);
 	DIO_u8WritePinVal(LCD_Enable, 0);
 
 	return;
