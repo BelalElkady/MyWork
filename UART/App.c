@@ -7,12 +7,17 @@
 #include "types.h"
 #include "UART_private.h"
 #include "UART_interface.h"
-#include "avr/interrupt.h"
+#include "interrupt.h"
+void ISR_Handler(void){
 
-ISR(USART_RXC_vect){
+
 
 }
+
+
 void main(void) {
+	UART_voidInit();
+	UART_voidReceiveISR(ISR_Handler);
 
 	while (1) {
 

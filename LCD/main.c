@@ -18,11 +18,20 @@ void main(void) {
 
 	while (1) {
 
+		__asm__("LDI 17,0");
+		__asm__("OUT 0x1B,17");
+
 
 		LCD_voidWriteString("Belal");
-		delay_ms(10);
-		LCD_voidClearSceen();
-		LCD_voidWriteName();
+
+		__asm__("LDI 17,0xff");
+		__asm__("OUT 0x1B,17");
+
+
+		LCD_voidWriteString("Belal");  //600u
+//		delay_ms(10);
+//		LCD_voidClearSceen();
+//		LCD_voidWriteName();
 
 
 
