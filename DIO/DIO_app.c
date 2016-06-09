@@ -21,13 +21,9 @@ int main(void) {
 
 
 	while (1) {
-		DIO_u8WritePinVal(0, 1);
-		delay100ms();
 
-				DIO_u8WritePinVal(0, 0);
-				delay100ms();
 
-		/*for (Local_u8Counter = 0; Local_u8Counter < 7; Local_u8Counter++) {
+		for (Local_u8Counter = 0; Local_u8Counter < 7; Local_u8Counter++) {
 			DIO_u8WritePortVal(LEDS, 0x01 << Local_u8Counter);
 			delay_ms(100);
 
@@ -98,7 +94,7 @@ int main(void) {
 			delay_ms(100);
 
 		}
-*/
+
 
 	}
 	return 0;

@@ -95,9 +95,11 @@ void Task3(void) {
 
 	if (Local_u8Distance>100){
 		DIO_u8WritePinVal(17,0);
+		DIO_u8WritePinVal(18,0);
 	}
 	else {
 		DIO_u8WritePinVal(17,1);
+		DIO_u8WritePinVal(18,1);
 	}
 
 	return;
