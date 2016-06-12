@@ -9,8 +9,9 @@
 #include "SPI_config.h"
 #include "SPI_private.h"
 #include "DIO_interface.h"
-#include "avr/interrupt.h"
 
+
+static u8 SPI_u8Data;
 
 static void (*PtrToIRQ)(void);
 
@@ -18,6 +19,7 @@ extern void SPI_voidInit(void) {
 	SPCR |= SPI_MODE | SPI_CPOL | SPI_CPHA | (SPI_CLOCK_RATE & 0x03)
 			| SPI_DATA_ORDER;
 	SPSR |= (SPI_CLOCK_RATE & 0x04) >> 1;
+	SPI_u8Data=0;
 	return;
 }
 
@@ -82,10 +84,13 @@ extern void SPI_voidSendData(u8 Copy_u8Data) {
 
 extern u8 SPI_voidReceiveData(void) {
 
-	while (!(SPSR & (1 << 7)))
-		;
+	if ((SPSR & (1 << 7)))
+	{
+		SPI_u8Data=SPDR;
+	}
 
-	return SPDR;
+
+	return SPI_u8Data;
 }
 extern void SPI_voidInterruptSendData(u8 Copy_u8Data){
 

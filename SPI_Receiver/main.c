@@ -11,7 +11,7 @@
 
 void SPI_IRQHandelr(void){
 
-	UART_voidSend(SPI_voidInterruptReceiveData());
+	DIO_u8WritePortVal(DIO_u8PORT2,SPI_voidInterruptReceiveData());
 }
 
 
