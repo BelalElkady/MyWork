@@ -60,7 +60,7 @@
 #define DIO_u8LOW   	0
 
 /*Comment!: Digital I/O direction */
-#define DIO_u8OUTPUT    	0
+#define DIO_u8INPUT    	0
 #define DIO_u8OUTPUT   	1
 
 
